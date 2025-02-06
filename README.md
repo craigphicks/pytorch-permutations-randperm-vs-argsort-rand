@@ -835,14 +835,19 @@ The slope is sufficiently close to $-\frac{1}{3}$ that it can be used in the fin
 <a name="decision-rule"></a>
 ## 6. The Decision Rule
 
-We will set the target $P_{\text{crit}} = 0.55$. For the case of $N=1$, the decision rule is:
+$K$ is the length of the permutation under consideration.
+$N$ is a free parameter representing the number of permutations in the statistical ensemble to be evaluated. $N=1$ is a typical value.
+
+We will set the target $P_{\text{crit}} = 0.55$. That would mean we would only be able to correctly guess whether a permutaion was fair or biased 11 out of 20 times.
+
+For the case of $N=1$, the decision rule is:
 
 - if $\log_2(K) < 16.005$
   - use the form `argsort(rand(batch_count, K))`
 - else if $\log_2(K) < 21.338$
-  - use the form `argsort(randint(low=-(2^{31}-1), high=2^{31}), (batch_count, K), dtype=torch.int32)`
+  - use the form `argsort(randint(low=-(2^{31}-1), high=2^{31}-1), (batch_count, K), dtype=torch.int32)`
 - else if $\log_2(K) < 42.672$
-  - use the form `argsort(randint(low=-(2^{63}-1), high=2^{63}), (batch_count, K), dtype=torch.int64)`
+  - use the form `argsort(randint(low=-(2^{63}-1), high=2^{63}-1), (batch_count, K), dtype=torch.int64)`
 - else 
   - use the form `randperm(K)`
 
@@ -851,12 +856,13 @@ In case the free parameter $N$ is greater than 1, the decision rule is:
 - if $\log_2(K) < 16.005 - \frac{\log_2(N)}{3}$
   - use the form `argsort(rand(batch_count, K))`
 - else if $\log_2(K) < 21.338 - \frac{\log_2(N)}{3}$
-  - use the form `argsort(randint(low=-(2^{31}-1), high=2^{31}), (batch_count, K), dtype=torch.int32)`
+  - use the form `argsort(randint(low=-(2^{31}-1), high=2^{31}-1), (batch_count, K), dtype=torch.int32)`
 - else if $\log_2(K) < 42.672 - \frac{\log_2(N)}{3}$
-  - use the form `argsort(randint(low=-(2^{63}-1), high=2^{63}), (batch_count, K), dtype=torch.int64)`
+  - use the form `argsort(randint(low=-(2^{63}-1), high=2^{63}-1), (batch_count, K), dtype=torch.int64)`
 - else 
   - use the form `randperm(K)`
 
+> *\* Note 1: The PyTorch documentation for `randint` parameters says "high (int) – One above the highest integer to be drawn from the distribution." Therefore, we would expect the setting `high=2^{31}` to be appropriate. However, this has been found to lead to errors in some PyTorch versions, which is avoid by subtracting 1*
 
 <a name="additional-considerations"></a>
 ## 7. Additional Considerations
