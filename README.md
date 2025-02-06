@@ -862,7 +862,7 @@ In case the free parameter $N$ is greater than 1, the decision rule is:
 - else 
   - use the form `randperm(K)`
 
-> *\* Note 1: The PyTorch documentation for `randint` parameters says "high (int) – One above the highest integer to be drawn from the distribution." Therefore, we would expect the setting `high=2^{31}` to be appropriate. However, this has been found to lead to errors in some PyTorch versions, which is avoid by subtracting 1*
+> *\* Note 1: The PyTorch documentation for `randint` parameters says "high (int) – One above the highest integer to be drawn from the distribution." Therefore, we would expect the setting `high=2^{31}` to be appropriate. However, this has been found to lead to errors in some PyTorch versions, which is avoided by subtracting 1*
 
 <a name="additional-considerations"></a>
 ## 7. Additional Considerations
