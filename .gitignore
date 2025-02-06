@@ -1,0 +1,6 @@
+.bash_history
+.env.*
+*.log
+.jupyter/
+core
+argsort-collision-md/draft_files/
