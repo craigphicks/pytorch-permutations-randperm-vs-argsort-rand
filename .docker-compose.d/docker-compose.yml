@@ -1,0 +1,3 @@
+include:
+  - ${COMMON_DOCKERFILES_DIR}/jupyter-nb/docker-compose.yml
+  - ${COMMON_DOCKERFILES_DIR}/vscodium-dockerfied-jupyter-exts/docker-compose.yml

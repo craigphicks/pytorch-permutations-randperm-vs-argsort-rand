@@ -1,0 +1,17 @@
+services:
+
+  jupyter-nb:
+    network_mode: !reset null
+    volumes:
+      - ${PWD}:/workspace
+  vscodium-dockerfied-jupyter-exts:
+    #mem_reservation: 4g
+    network_mode: !reset null
+
+  # Because vscodium-dockerfied-jupyter 
+  # crashes codium we do single and connect over host
+  # jupyter-nb:
+  #   volumes:
+  #     - ${PWD}:/workspace
+  #   ports: 
+  #     - "127.0.0.1:38888:8888"
