@@ -72,29 +72,29 @@ The user generating multiple permutations of length $K$ must decide which form t
 
 Furthermore, the batch capable call may be any of these three forms:
 - `argsort(rand(batch_count, K))` where the `rand` call returns values of type `torch.float32`, and uses a 24-bit random number generator.
-- `argsort(randint(low=-(2^{31}-1), high=2^{31}-1), (batch_count, K), dtype=torch.int32)` where the `randint` call returns values of type `torch.int32` and uses a 32-bit random number generator (\*1).
-- `argsort(randint(low=-(2^{63}-1), high=2^{63}-1), (batch_count, K), dtype=torch.int64)` where the `randint` call returns values of type `torch.int64` and uses a 64-bit random number generator (\*1).
+- `argsort(randint(low=-2**31, high=2**31-1, (batch_count, K), dtype=torch.integer32)` where the `randint` call returns values of type `torch.integer32` and uses a 32-bit random number generator (\*1).
+- `argsort(randint(low=-2**63, high=2**63-1, (batch_count, K), dtype=torch.integer64)` where the `randint` call returns values of type `torch.integer64` and uses a 64-bit random number generator (\*1).
 
-> *\* Note 1: The PyTorch documentation for `randint` parameters says "high (int) – One above the highest integer to be drawn from the distribution." Therefore, we would expect the setting `high=2^{31}` to be appropriate. However, this has been found to lead to errors in some PyTorch versions.*
+> *\* Note 1: The PyTorch documentation for `randint` parameters says "high (int) – One above the highest integer to be drawn from the distribution." Therefore, we would expect the setting `high=2**31` to be appropriate. However, this has been found to lead to errors in some PyTorch versions.*
 
-As will be shown, a higher number of bits in the random number generator will produce a less biased distribution of permutations. On the other hand, the `int64` bit version uses twice the memory as the `int32` bit version, allowing for less parallelization and thus being slower. Both `float32` and `int32` use the same amount of memory, but the `rand()` form of the call has been anecdotally seen to be a few percent faster than `randint()` with `int32` form, although this may vary by system.
+As will be shown, a higher number of bits in the random number generator will produce a less biased distribution of permutations. On the other hand, the `integer64` bit version uses twice the memory as the `integer32` bit version, allowing for less parallelization and thus being slower. Both `float32` and `integer32` use the same amount of memory, but the `rand()` form of the call has been anecdotally seen to be a few percent faster than `randint()` with `integer32` form, although this may vary by system.
 
 Balancing all these considerations and putting them together in the form of a cost criterion $P_{\text{crit}}$ will allow for a decision rule with the form:
 
 - if $P_{\text{crit}}(K; \text{float}) < C_{\text{thresh}}$
   - use the form `argsort(rand(batch_count, K))`
-- else if $P_{\text{crit}}(K; \text{int32}) < C_{\text{thresh}}$
-  - use the form `argsort(randint(low=-(2^{31}-1), high=2^{31}), (batch_count, K), dtype=torch.int32)`
-- else if $P_{\text{crit}}(K; \text{int64}) < C_{\text{thresh}}$
-  - use the form `argsort(randint(low=-(2^{63}-1), high=2^{63}), (batch_count, K), dtype=torch.int64)`
+- else if $P_{\text{crit}}(K; \text{integer32}) < C_{\text{thresh}}$
+  - use the form `argsort(randint(low=-2**31, high=2**31-1, (batch_count, K), dtype=torch.integer32)`
+- else if $P_{\text{crit}}(K; \text{integer64}) < C_{\text{thresh}}$
+  - use the form `argsort(randint(low=-2**63), high=2**63-1), (batch_count, K), dtype=torch.integer64)`
 - else 
   - use the form `randperm(K)`
 
 where 
 - $K$ is the permutation length, fixed with respect to the decision rule,
-- $P_{\text{crit}}(K; X)$ is a unified criterion depending on permutation length $K$ and $X \in \{\text{float}, \text{int32}, \text{int64}\}$,
+- $P_{\text{crit}}(K; X)$ is a unified criterion depending on permutation length $K$ and $X \in \{\text{float}, \text{integer32}, \text{integer64}\}$,
 - $C_{\text{thresh}}$ is a threshold on the value of $P_{\text{crit}}$, fixed within the decision rule, and is a free parameter set depending upon the application.
-- $P_{\text{crit}}(K; X)$ increases monotonically with $X$, $X$ having the order $\{\text{float}, \text{int32}, \text{int64}\}$.
+- $P_{\text{crit}}(K; X)$ increases monotonically with $X$, $X$ having the order $\{\text{float}, \text{integer32}, \text{integer64}\}$.
 
 Section ["Best Guess Criterion: Single Set of K Tosses"](#best-guess-criterion-single) introduces the model for $P_{\text{crit}}(K; X)$ as described above.
 
@@ -845,9 +845,9 @@ For the case of $N=1$, the decision rule is:
 - if $\log_2(K) < 16.005$
   - use the form `argsort(rand(batch_count, K))`
 - else if $\log_2(K) < 21.338$
-  - use the form `argsort(randint(low=-(2^{31}-1), high=2^{31}-1), (batch_count, K), dtype=torch.int32)`
+  - use the form `argsort(randint(low=-2**31, high=2**31-1, (batch_count, K), dtype=torch.integer32)`
 - else if $\log_2(K) < 42.672$
-  - use the form `argsort(randint(low=-(2^{63}-1), high=2^{63}-1), (batch_count, K), dtype=torch.int64)`
+  - use the form `argsort(randint(low=-2**63, high=2**63-1, (batch_count, K), dtype=torch.integer64)`
 - else 
   - use the form `randperm(K)`
 
@@ -856,13 +856,13 @@ In case the free parameter $N$ is greater than 1, the decision rule is:
 - if $\log_2(K) < 16.005 - \frac{\log_2(N)}{3}$
   - use the form `argsort(rand(batch_count, K))`
 - else if $\log_2(K) < 21.338 - \frac{\log_2(N)}{3}$
-  - use the form `argsort(randint(low=-(2^{31}-1), high=2^{31}-1), (batch_count, K), dtype=torch.int32)`
+  - use the form `argsort(randint(low=-2**31, high=2**31-1, (batch_count, K), dtype=torch.integer32)`
 - else if $\log_2(K) < 42.672 - \frac{\log_2(N)}{3}$
-  - use the form `argsort(randint(low=-(2^{63}-1), high=2^{63}-1), (batch_count, K), dtype=torch.int64)`
+  - use the form `argsort(randint(low=-2**63, high=2**63-1, (batch_count, K), dtype=torch.integer64)`
 - else 
   - use the form `randperm(K)`
 
-> *\* Note 1: The PyTorch documentation for `randint` parameters says "high (int) – One above the highest integer to be drawn from the distribution." Therefore, we would expect the setting `high=2^{31}` to be appropriate. However, this has been found to lead to errors in some PyTorch versions, which is avoided by subtracting 1*
+> *\* Note 1: The PyTorch documentation for `randint` parameters says "high (int) – One above the highest integer to be drawn from the distribution." Therefore, we would expect the setting `high=2**31` to be appropriate. However, this has been found to lead to errors in some PyTorch versions, which is avoided by subtracting 1*
 
 <a name="additional-considerations"></a>
 ## 7. Additional Considerations

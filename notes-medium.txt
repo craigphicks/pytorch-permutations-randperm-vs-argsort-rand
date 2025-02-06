@@ -1,0 +1,1 @@
+Go to the Markdown-to-Medium website at https://markdown-to-medium.surge.sh/. Copy the text from your Markdown file and paste it into the text box on the Markdown-to-Medium website. Copy the “MEDIUM” code that the website generates (the right side of the website). Log in to your Medium account and create a new post.
