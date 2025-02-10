@@ -502,7 +502,7 @@ The equation for $K$ corresponding to equation 9.2 is
 $$
 \begin{aligned}
 \log_2(K) &= \frac{2}{3}(\log_2(\sqrt{2}\ \text{erfinv}(2*P_{\text{crit}} - 1)) + m + 2) - \frac{\log_2(N)}{3}
-          &= \log_2(K) \right|_{N=1}  - \frac{\log_2(N)}{3}
+          &= \log_2(K) \mid_{N=1}  - \frac{\log_2(N)}{3}
 \end{aligned}
 \tag{9.N.2}
 $$
@@ -511,25 +511,25 @@ The first line in equation 9.N.2 shows that the only difference with equation 9.
 
 The second line in equation 9.N.2 shows the value of $\log_2(K)$ becoming zero when 
 $$
-\log_2(N) = 3\ \log_2(K) \right|_{N=1}
+\log_2(N) = 3\ \log_2(K) \mid_{N=1}
 $$
-where $\log_2(K) \right|_{N=1}$ is $\log_2(K)$ when $N=1$.  In fact the approximation breaks for low values of $K$ because we used $K-1 \approx K$ earlier in equation 9.2, so that is not an exact result.
+where $\log_2(K) \mid_{N=1}$ is $\log_2(K)$ when $N=1$.  In fact the approximation breaks for low values of $K$ because we used $K-1 \approx K$ earlier in equation 9.2, so that is not an exact result.
 
 
-With $N=2^16=65,356$ calculate another table using the function `calculate_log2K` from [Code 1](#calculate-log2K):
+With $N=2^{16}=65,356$ calculate another table using the function `calculate_log2K` from [Code 1](#calculate-log2K):
 
 
 ```python
 if __name__ == "__main__":
     # Calculate and display the table
     table = create_table(log2_N=16)
-    print("\nTable of log2(K) values with N=2^16:")
+    print("\nTable of log2(K) values with N=2**16:")
     print(table.round(4))  # Round to 4 decimal places for readability
 
 ```
 
     
-    Table of log2(K) values with N=2^16:
+    Table of log2(K) values with N=2**16:
     m              24         32         64
     P_crit                                 
     0.501    6.239977   11.57331  32.906644
@@ -537,7 +537,7 @@ if __name__ == "__main__":
     0.550   10.005075  15.338409  36.671742
 
 
-In this new table with $N=2^16$ instead of $1$, but with $P_{\text{crit}} = 0.55$ and $m=24$ as before, a permutation length of $K=32,268 = 2^{15}$ would no longer satisfy the criterion.  However, for a value of $m=32$ it would satisfy the criterion.
+In this new table with $N=2^{16}$ instead of $N=1$, but with $P_{\text{crit}} = 0.55$ and $m=24$ as before, a permutation length of $K=32,268 = 2^{15}$ would no longer satisfy the criterion.  However, for a value of $m=32$ it would satisfy the criterion.
 
 [To outline](#outline)
 
