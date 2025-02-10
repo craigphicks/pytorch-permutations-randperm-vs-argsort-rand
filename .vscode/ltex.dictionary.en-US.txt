@@ -1,0 +1,4 @@
+randperm
+argsort
+frac
+sqrt

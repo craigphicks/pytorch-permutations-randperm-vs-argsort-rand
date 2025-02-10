@@ -1,3 +1,8 @@
 {
-    "jupyter.connectionFile": "${workspaceFolder}/.jupyter/jupyter_connection_info.json"
+    "jupyter.connectionFile": "${workspaceFolder}/.jupyter/jupyter_connection_info.json",
+    "ltex.language": "en-US",
+    "ltex.enabled": [
+        "latex",
+        "markdown"
+    ]
 }

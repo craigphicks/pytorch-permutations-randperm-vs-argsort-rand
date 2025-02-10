@@ -1,0 +1,1 @@
+{"rule":"ENGLISH_WORD_REPEAT_BEGINNING_RULE","sentence":"^\\QSection \"Best Guess Criterion: N Sets of K Tosses\" adds another parameter, \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q, to give \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q, where \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q is the number of permutations whose joint distribution will be considered for bias.\\E$"}
