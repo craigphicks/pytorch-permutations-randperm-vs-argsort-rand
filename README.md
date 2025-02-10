@@ -2,7 +2,7 @@
 
 ## TL;DR
 
-If you want quick guidance on choosing between `torch.randperm()` and `torch.argsort(torch.rand())` or `torch.argsort(torch.randint())` for generating (batch) permutations in PyTorch, go directly to the [Decision Rule section](#decision-rules).
+If you want quick guidance on choosing between `torch.randperm()` and `torch.argsort(torch.rand())` or `torch.argsort(torch.randint())` for generating (batch) permutations in PyTorch, go directly to the [Summary of Decision Rule](#decision-rule) section.
 
 
 <a name="outline"></a>
