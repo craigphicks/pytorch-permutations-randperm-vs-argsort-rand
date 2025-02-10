@@ -20,7 +20,7 @@ This document provides an in-depth analysis of generating permutations in PyTorc
 4. **[Coin Toss Binomial Distribution Approximation as a Normal Distribution](#coin-toss-binomial)**: Models the problem using a binomial distribution and approximates it as a normal distribution to simplify calculations
 5. **[Best Guess Criterion: Single Set of K Tosses](#best-guess-criterion-single)**: Gives the mathematical model for $P_{\text{crit}}(K; X)$ for a single permutation based on statistical analysis.
 6. **[Best Guess Criterion: N Sets of K Tosses](#best-guess-criterion-multi)**: Extends the model to multiple permutations and derives bounds for the transition zone.
-7. **[The Decision Rule](#decision-rule)**: Provides a practical decision rule for choosing the appropriate PyTorch batch permutation generation method (if any) based on the analysis.
+7. **[Summary of Decision Rule](#decision-rule)**: Provides a practical decision rule for choosing the appropriate PyTorch batch permutation generation method (if any) based on the analysis.
 8. **[Additional Considerations](#additional-considerations)**: Discusses the simplification $\sigma_b \approx \sigma_f$, alternative criteria, and empirical testing for determining the effective number of bits in the float type.
 9. **[Conclusion](#conclusion)**: Summarizes the findings and the practical guidelines derived from the analysis.
 
