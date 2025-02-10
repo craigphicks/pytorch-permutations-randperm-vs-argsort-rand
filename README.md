@@ -664,7 +664,7 @@ $$
 \text{RelativeVariance}(P_b;P_f) &= \frac{\int P_b(x) (x-\mu_f)^2}{\int P_f(x) (x-\mu_f)^2} - 1 \\
 &= \frac{\sigma_b^2 + (\mu_b - \mu_f)^2}{\sigma_f^2} - 1 \\
 &\approx \frac{(\mu_b - \mu_f)^2}{\sigma_f^2} \text{ (by simplification of equation 6.1)} \\
-&= \left( 2\ \text{inv\_cdf}(P_c;0,1) \right)^2 \text{ (by equation 7)}
+&= \left( 2\ \text{invcdf}(P_c;0,1) \right)^2 \text{ (by equation 7)}
 \end{aligned}
 $$
 
@@ -676,7 +676,7 @@ Another alternative is the KL divergence from $P_f$ to $P_b$,
 $$
 \begin{aligned}
 \text{KL}(P_f \parallel P_b) &\approx \frac{(\mu_b-\mu_f)^2}{2\ \sigma_f^2} \text{ (by simplification of equation 6.1)} \\
-&= \left( \sqrt{2}\ \text{inv\_cdf}(P_c;0,1) \right)^2 \text{ (by equation 7)}
+&= \left( \sqrt{2}\ \text{invcdf}(P_c;0,1) \right)^2 \text{ (by equation 7)}
 \end{aligned}
 $$
 
@@ -687,7 +687,7 @@ $\sqrt{NK}\ d$ is attractive because of its simplicity in being a straightforwar
 $$
 \begin{aligned}
 \sqrt{NK}\ d &= \frac{\mu_b-\mu_f}{2\ \sigma_f} \text{ (by equation 9)} \\ 
-&= \text{inv\_cdf}(P_c;0,1) \text{ (by equation 7)}
+&= \text{invcdf}(P_c;0,1) \text{ (by equation 7)}
 \end{aligned}
 \tag{8}
 $$
@@ -698,7 +698,7 @@ $$
 They all follow the form
 
 $$
-(2^p \text{inv\_cdf}(P_c;0,1))^q
+(2^p\ \text{invcdf}(P_c;0,1))^q
 $$
 
 where $p \in \{0,\frac{1}{2},1\}$ and $q \in \{1,2\}$
