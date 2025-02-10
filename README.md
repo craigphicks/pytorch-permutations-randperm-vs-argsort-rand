@@ -851,7 +851,7 @@ In this document, we explored the differences between `torch.randperm` and `torc
 
 We identified that `torch.randperm` is well-suited for generating single permutations without bias but lacks the ability to produce multiple permutations in batch mode. On the other hand, `torch.argsort` with `torch.rand` or `torch.randint` (with either 32-bit or 64-bit integers) can generate multiple permutations in parallel, improving performance on GPUs but introducing potential biases due to duplicate values.
 
-By modeling the problem as a binomial distribution and using statistical criteria, in (section 7)[#decision-rule] X we provided a criterion determining which, if any, PyTorch form for producing random permutations to use.  An important result is that the 64-bit integer call can be used safely in all but the most extreme cases.
+By modeling the problem as a binomial distribution and using statistical criteria, in [section 7](#decision-rule) we provided a criterion determining which, if any, PyTorch form for producing random permutations to use.  An important result is that the 64-bit integer call can be used safely in all but the most extreme cases.
 
 We also demonstrated that the simplification $\sigma_b \approx \sigma_f$ is justified given the small values of $d^2$ in our solution space, simplifying the mathematical model without significantly affecting accuracy.  Similarly, we demonstrated that collisions of 3 or more did not occur with the range of interest, with is another condition for model accuracy.
 
