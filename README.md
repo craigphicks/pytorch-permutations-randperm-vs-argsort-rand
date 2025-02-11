@@ -561,14 +561,24 @@ def show_call_validty(K, p_crit, N=1):
     md = f"""
 
 **Call Validities for log2(K)={np.log2(K):.4f}, P_crit={p_crit}, log2(N)={np.log2(N):.4f}** 
-|call| valid | max allowed log2(K) |
+|m| valid | max allowed log2(K) |
 | -- | -- | -- |
-| `argsort(rand((batch_count,K)))` | {is_valid(24)} | {calculate_log2K(p_crit,24,np.log2(N)):.4f} |
-| `argsort(randint(low=-2**31,high=2**31-1,(batch_count,K),dtype=integer32))` | {is_valid(32)} | {calculate_log2K(p_crit,32,np.log2(N)):.4f} |
-| `argsort(randint(low=-2**63,high=2**63-1,(batch_count,K),dtype=integer64))` | {is_valid(64)} | {calculate_log2K(p_crit,64,np.log2(N)):.4f} |
+| 24 | {is_valid(24)} | {calculate_log2K(p_crit,24,np.log2(N)):.4f} |
+| 32 | {is_valid(32)} | {calculate_log2K(p_crit,32,np.log2(N)):.4f} |
+| 64 | {is_valid(64)} | {calculate_log2K(p_crit,64,np.log2(N)):.4f} |
 """
     
     display(Markdown(md))
+
+
+display(Markdown("""
+**Correspondence between $m$ and PyTorch call form**
+| m | call |
+| -- | -- |
+|24 | `argsort(rand((batch_count,K)))` |
+|32 | `argsort(randint(low=-2**31,high=2**31-1,(batch_count,K),dtype=integer32))` |
+|64 | `argsort(randint(low=-2**63,high=2**63-1,(batch_count,K),dtype=integer64))`
+"""))
 
 show_call_validty(K=32*1024, p_crit=0.55, N=1)
 show_call_validty(K=32*1024, p_crit=0.55, N=2**16)
@@ -586,13 +596,24 @@ show_call_validty(K=32*1024*1024, p_crit=0.500001, N=64*1024*1024)
 
 
 
+**Correspondence between $m$ and PyTorch call form**
+| m | call |
+| -- | -- |
+|24 | `argsort(rand((batch_count,K)))` |
+|32 | `argsort(randint(low=-2**31,high=2**31-1,(batch_count,K),dtype=integer32))` |
+|64 | `argsort(randint(low=-2**63,high=2**63-1,(batch_count,K),dtype=integer64))`
+
+
+
+
+
 
 **Call Validities for log2(K)=15.0000, P_crit=0.55, log2(N)=0.0000** 
-|call| valid | max allowed log2(K) |
+|m| valid | max allowed log2(K) |
 | -- | -- | -- |
-| `argsort(rand((batch_count,K)))` | ✓ | 15.3384 |
-| `argsort(randint(low=-2**31,high=2**31-1,(batch_count,K),dtype=integer32))` | ✓ | 20.6717 |
-| `argsort(randint(low=-2**63,high=2**63-1,(batch_count,K),dtype=integer64))` | ✓ | 42.0051 |
+| 24 | ✓ | 15.3384 |
+| 32 | ✓ | 20.6717 |
+| 64 | ✓ | 42.0051 |
 
 
 
@@ -600,11 +621,11 @@ show_call_validty(K=32*1024*1024, p_crit=0.500001, N=64*1024*1024)
 
 
 **Call Validities for log2(K)=15.0000, P_crit=0.55, log2(N)=16.0000** 
-|call| valid | max allowed log2(K) |
+|m| valid | max allowed log2(K) |
 | -- | -- | -- |
-| `argsort(rand((batch_count,K)))` | ✗ | 10.0051 |
-| `argsort(randint(low=-2**31,high=2**31-1,(batch_count,K),dtype=integer32))` | ✓ | 15.3384 |
-| `argsort(randint(low=-2**63,high=2**63-1,(batch_count,K),dtype=integer64))` | ✓ | 36.6717 |
+| 24 | ✗ | 10.0051 |
+| 32 | ✓ | 15.3384 |
+| 64 | ✓ | 36.6717 |
 
 
 
@@ -620,11 +641,11 @@ show_call_validty(K=32*1024*1024, p_crit=0.500001, N=64*1024*1024)
 
 
 **Call Validities for log2(K)=25.0000, P_crit=0.55, log2(N)=26.0000** 
-|call| valid | max allowed log2(K) |
+|m| valid | max allowed log2(K) |
 | -- | -- | -- |
-| `argsort(rand((batch_count,K)))` | ✗ | 6.6717 |
-| `argsort(randint(low=-2**31,high=2**31-1,(batch_count,K),dtype=integer32))` | ✗ | 12.0051 |
-| `argsort(randint(low=-2**63,high=2**63-1,(batch_count,K),dtype=integer64))` | ✓ | 33.3384 |
+| 24 | ✗ | 6.6717 |
+| 32 | ✗ | 12.0051 |
+| 64 | ✓ | 33.3384 |
 
 
 
@@ -632,11 +653,11 @@ show_call_validty(K=32*1024*1024, p_crit=0.500001, N=64*1024*1024)
 
 
 **Call Validities for log2(K)=25.0000, P_crit=0.50001, log2(N)=26.0000** 
-|call| valid | max allowed log2(K) |
+|m| valid | max allowed log2(K) |
 | -- | -- | -- |
-| `argsort(rand((batch_count,K)))` | ✗ | -1.5226 |
-| `argsort(randint(low=-2**31,high=2**31-1,(batch_count,K),dtype=integer32))` | ✗ | 3.8107 |
-| `argsort(randint(low=-2**63,high=2**63-1,(batch_count,K),dtype=integer64))` | ✓ | 25.1441 |
+| 24 | ✗ | -1.5226 |
+| 32 | ✗ | 3.8107 |
+| 64 | ✓ | 25.1441 |
 
 
 
@@ -644,11 +665,11 @@ show_call_validty(K=32*1024*1024, p_crit=0.500001, N=64*1024*1024)
 
 
 **Call Validities for log2(K)=25.0000, P_crit=0.500001, log2(N)=26.0000** 
-|call| valid | max allowed log2(K) |
+|m| valid | max allowed log2(K) |
 | -- | -- | -- |
-| `argsort(rand((batch_count,K)))` | ✗ | -3.7372 |
-| `argsort(randint(low=-2**31,high=2**31-1,(batch_count,K),dtype=integer32))` | ✗ | 1.5961 |
-| `argsort(randint(low=-2**63,high=2**63-1,(batch_count,K),dtype=integer64))` | ✗ | 22.9295 |
+| 24 | ✗ | -3.7372 |
+| 32 | ✗ | 1.5961 |
+| 64 | ✗ | 22.9295 |
 
 
 
