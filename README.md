@@ -512,9 +512,11 @@ $$
 The first line in equation 9.N.2 shows that the only difference with equation 9.2 is the final subtrahend $\frac{\log_2(N)}{3}$.  
 
 The second line in equation 9.N.2 shows the value of $\log_2(K)$ becoming zero when 
+
 $$
 \log_2(N) = 3\ \log_2(K) \mid_{N=1}
 $$
+
 where $\log_2(K) \mid_{N=1}$ is $\log_2(K)$ when $N=1$.  In fact the approximation breaks for low values of $K$ because we used $K-1 \approx K$ earlier in equation 9.2, so that is not an exact result.
 
 
