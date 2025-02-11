@@ -392,7 +392,8 @@ def calculate_log2K(p_crit, m, log2_N = 0):
     Returns:
         float: Calculated log2(K) value
     """
-    return (2/3) * (np.log2(np.sqrt(2) * erfinv(2*p_crit - 1)) + m + 2) - log2_N / 3
+    return (2/3) * (np.log2(np.sqrt(2) * erfinv(2*p_crit - 1)) + m + 2) \
+        - log2_N / 3
 
 def create_table(log2_N = 0):
     # Define input values
@@ -493,8 +494,9 @@ P_{\text{crit}} &= \text{cdf}(\frac{NKd}{2}; 0, \frac{\sqrt{NK}}{2}) \\
 $$
 
 Substituting for $d$:
+
 $$
-P_{\text{crit}} = \text{cdf}(\frac{\sqrt{NK}\ (K-1)}{2^{m+3}}; 0, 1)
+P_{\text{crit}} = \text{cdf}(\frac{\sqrt{NK}\ (K-1)}{2^{m+2}}; 0, 1)
 $$
 
 The equation for $K$ corresponding to equation 9.2 is 

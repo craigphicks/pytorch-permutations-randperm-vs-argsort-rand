@@ -158,49 +158,10 @@ show_call_validty(K=32*1024*1024, p_crit=0.50001, N=64*1024*1024)
 show_call_validty(K=32*1024*1024, p_crit=0.500001, N=64*1024*1024)
 ```
 
-
-
-Call Validities for log2(K)=15.0000, P_crit=0.55, log2(N)=0.0000 
-|call| valid | max allowed log2(K) |
-| -- | -- | -- |
-| `torch.argsort(torch.rand((batch_count,K)))` | ✓ | 15.3384 |
-| `torch.argsort(torch.randint(low=-2**31,high=2**31-1,(batch_count,K),dtype=torch.integer32))` | ✓ | 20.6717 |
-| `torch.argsort(torch.randint(low=-2**63,high=2**63-1,(batch_count,K),dtype=torch.integer64))` | ✓ | 42.0051 |
-
-Call Validities for log2(K)=15.0000, P_crit=0.55, log2(N)=16.0000 
-|call| valid | max allowed log2(K) |
-| -- | -- | -- |
-| `torch.argsort(torch.rand((batch_count,K)))` | ✗ | 10.0051 |
-| `torch.argsort(torch.randint(low=-2**31,high=2**31-1,(batch_count,K),dtype=torch.integer32))` | ✓ | 15.3384 |
-| `torch.argsort(torch.randint(low=-2**63,high=2**63-1,(batch_count,K),dtype=torch.integer64))` | ✓ | 36.6717 |
-
-#### Explore the limits of using `randint` with 64 bits:
-
-Call Validities for log2(K)=25.0000, P_crit=0.55, log2(N)=26.0000 
-|call| valid | max allowed log2(K) |
-| -- | -- | -- |
-| `torch.argsort(torch.rand((batch_count,K)))` | ✗ | 6.6717 |
-| `torch.argsort(torch.randint(low=-2**31,high=2**31-1,(batch_count,K),dtype=torch.integer32))` | ✗ | 12.0051 |
-| `torch.argsort(torch.randint(low=-2**63,high=2**63-1,(batch_count,K),dtype=torch.integer64))` | ✓ | 33.3384 |
-
-Call Validities for log2(K)=25.0000, P_crit=0.50001, log2(N)=26.0000 
-|call| valid | max allowed log2(K) |
-| -- | -- | -- |
-| `torch.argsort(torch.rand((batch_count,K)))` | ✗ | -1.5226 |
-| `torch.argsort(torch.randint(low=-2**31,high=2**31-1,(batch_count,K),dtype=torch.integer32))` | ✗ | 3.8107 |
-| `torch.argsort(torch.randint(low=-2**63,high=2**63-1,(batch_count,K),dtype=torch.integer64))` | ✓ | 25.1441 |
-
-Call Validities for log2(K)=25.0000, P_crit=0.500001, log2(N)=26.0000 
-|call| valid | max allowed log2(K) |
-| -- | -- | -- |
-| `torch.argsort(torch.rand((batch_count,K)))` | ✗ | -3.7372 |
-| `torch.argsort(torch.randint(low=-2**31,high=2**31-1,(batch_count,K),dtype=torch.integer32))` | ✗ | 1.5961 |
-| `torch.argsort(torch.randint(low=-2**63,high=2**63-1,(batch_count,K),dtype=torch.integer64))` | ✗ | 22.9295 |
-
-As can be seen in the results under **"Explore the limits of using randint with 64 bits"**, using 64-bit version will produce unbiased result for all but the most extreme cases.
+[]
 
 ## 5. Conclusion
 
-A decision rule for choosing how to generate batch permutations in PyTorch has been provided.  It is based on statistics, with two parameters **P_crit** and **N** to adjust for a usage case suitable risk model.
+A decision rule for choosing how to generate batch permutations of a chosen length $K$ in PyTorch has been provided.  It is based on statistics, with two parameters **P_crit** and **N** to adjust for a usage case specific risk model.
 
 A more detailed explanation may be found https://github.com/craigphicks/pytorch-permutations-randperm-vs-argsort-rand/blob/main/README.md.
